@@ -544,7 +544,7 @@ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
 
-[Full MIT license text...]
+
 ```
 
 ### Third-Party Licenses
@@ -605,7 +605,7 @@ If you find Face Blur Studio Pro useful:
 
 <div align="center">
 
-**Made with ❤️ for privacy-conscious creators worldwide**
+**Made by M.Hashir for privacy-conscious creators worldwide**
 
 [Report Bug](https://github.com/Al-Baddar/face-blur-studio-pro/issues) • [Request Feature](https://github.com/Al-Baddar/face-blur-studio-pro/issues) • [Documentation](https://github.com/Al-Baddar/face-blur-studio-pro/wiki)
 
