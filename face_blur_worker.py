@@ -3,14 +3,25 @@ Face Blur Worker - Enhanced Processing Engine
 - Dual-pass MediaPipe detection
 - Haar cascade fallback for small/distant faces
 - Box padding and deduplication
+- EXE-friendly resource loading
 """
 
 import cv2
 import mediapipe as mp
 import numpy as np
 import os
+import sys
 import subprocess
 from PyQt5.QtCore import QThread, pyqtSignal
+
+
+def _resource_path(relative_path):
+    """Get absolute path to resource, works for dev and PyInstaller EXE."""
+    if hasattr(sys, "_MEIPASS"):
+        # PyInstaller EXE mode
+        return os.path.join(sys._MEIPASS, relative_path)
+    # Normal Python mode
+    return os.path.join(os.path.abspath("."), relative_path)
 
 
 def _ensure_odd(n: int) -> int:
@@ -66,11 +77,26 @@ class FaceBlurrer:
                 min_detection_confidence=max(0.2, confidence - 0.15),
                 model_selection=other_model
             )
-        # Haar fallback for tiny faces
+        # Haar fallback for tiny faces (EXE-safe loading)
         self.haar = None
         if group_mode:
-            haar_path = cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
-            self.haar = cv2.CascadeClassifier(haar_path)
+            try:
+                # Try loading from bundled resource first
+                haar_path = _resource_path("haarcascade_frontalface_default.xml")
+                self.haar = cv2.CascadeClassifier(haar_path)
+                
+                # Verify it loaded correctly
+                if self.haar.empty():
+                    # Fallback to OpenCV's built-in path
+                    haar_path = cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
+                    self.haar = cv2.CascadeClassifier(haar_path)
+                    
+                    # Final check
+                    if self.haar.empty():
+                        self.haar = None
+            except Exception:
+                # If all else fails, disable Haar cascade
+                self.haar = None
 
     def _collect_mediapipe_boxes(self, image):
         h, w = image.shape[:2]
