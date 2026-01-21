@@ -53,6 +53,8 @@ Face Blur Studio Pro helps creators, professionals, and organizations protect pr
 - Real-time progress with status messages
 
 Tip: Turn on “Show Debug Boxes” to visualize detected areas during preview.
+<img width="466" height="520" alt="image" src="https://github.com/user-attachments/assets/c6acae7b-648c-457b-b60b-c75861fb40e3" />
+
 
 ---
 
