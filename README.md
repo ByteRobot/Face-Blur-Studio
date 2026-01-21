@@ -419,6 +419,54 @@ pyinstaller --noconfirm \
 --strip
 ```
 
+### PyInstaller (EXE-friendly build with Haar Cascade)
+
+To ensure OpenCV’s Haar cascade loads correctly inside the EXE, bundle the XML file.
+
+1) Copy Haar cascade file to project root (same folder as `main.py`):
+```bash
+python -c "import cv2; print(cv2.data.haarcascades)"
+# Open the printed folder and copy: haarcascade_frontalface_default.xml
+# Paste it next to main.py
+```
+
+2) Build the EXE with data and hidden imports:
+```bash
+pyinstaller --onefile --windowed --name FaceBlurStudioPro \
+  --hidden-import=mediapipe \
+  --hidden-import=cv2 \
+  --hidden-import=face_blur_worker \
+  --collect-data=mediapipe \
+  --collect-submodules=mediapipe \
+  --add-data "haarcascade_frontalface_default.xml;." \
+  main.py
+```
+
+Windows CMD (caret for line breaks):
+```bash
+pyinstaller --onefile --windowed --name FaceBlurStudioPro ^
+--hidden-import=mediapipe ^
+--hidden-import=cv2 ^
+--hidden-import=face_blur_worker ^
+--collect-data=mediapipe ^
+--collect-submodules=mediapipe ^
+--add-data "haarcascade_frontalface_default.xml;." ^
+main.py
+```
+
+3) Run the EXE:
+```
+dist/
+└── FaceBlurStudioPro.exe  # Windows
+```
+
+Optional debug build (shows console errors):
+```bash
+pyinstaller --onefile --console --name FaceBlurStudioPro \
+  --add-data "haarcascade_frontalface_default.xml;." \
+  main.py
+```
+
 ---
 
 ## 🔧 Troubleshooting
@@ -426,7 +474,7 @@ pyinstaller --noconfirm \
 ### Common Issues & Solutions
 
 <details>
-<summary><b>❌ Faces Not Detected in Wide Group Photos</b></summary>
+<summary><b>�� Faces Not Detected in Wide Group Photos</b></summary>
 
 **Solutions:**
 1. Lower confidence threshold to 25-35%
