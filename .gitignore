@@ -1,0 +1,40 @@
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# Build files
+build/
+dist/
+*.spec
+*.egg-info/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Models (large files)
+*.pt
+*.pth
+yolov8n.pt
+
+# Temp files
+*.tmp
+*.temp
+.temp/
+
+# Logs
+*.log
