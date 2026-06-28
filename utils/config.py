@@ -1,8 +1,17 @@
-# Configuration settings
+import sys
+import os
+
+def resource_path(relative_path):
+    """PyInstaller .exe ke andar bhi sahi path dega"""
+    if hasattr(sys, '_MEIPASS'):
+        base_path = sys._MEIPASS
+    else:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
 
 class Config:
     # Model settings
-    FACE_DETECTION_MODEL = "yolov8n.pt"
+    FACE_DETECTION_MODEL = resource_path(os.path.join("models", "yolov8n.pt"))
     CONFIDENCE_THRESHOLD = 0.5
     
     # Video settings
@@ -12,7 +21,7 @@ class Config:
     # Blur settings
     BLUR_INTENSITY = 25
     BLUR_INTENSITY_MIN = 5
-    BLUR_INTENSITY_MAX = 100  # ← Increased from 50 to 100
+    BLUR_INTENSITY_MAX = 100
     
     # UI settings
     PREVIEW_WIDTH = 640
