@@ -7,6 +7,7 @@ PyInstaller.__main__.run([
     '--onefile',
     '--windowed',
     '--name=FaceBlur-Pro',
+    '--icon=icon.ico',
     '--add-data=models:models',
     '--add-data=models/yolov8n.pt:models',
     '--add-data=processors:processors',
